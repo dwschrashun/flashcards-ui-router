@@ -1,5 +1,5 @@
-app.factory('FlashCardsFactory', function ($http, currentFlashCards) {
-
+app.factory('FlashCardsFactory', function ($http, currentFlashCards, $state) {
+  var all_cards;
   var categories = [
     'MongoDB',
     'Express',
@@ -22,6 +22,7 @@ app.factory('FlashCardsFactory', function ($http, currentFlashCards) {
       //   currentFlashCards.push(card);
       // });
       angular.copy(cards, currentFlashCards);
+
       return currentFlashCards;
     });
   }
@@ -41,10 +42,30 @@ app.factory('FlashCardsFactory', function ($http, currentFlashCards) {
       return response.data;
     });
   }
+
+  function getById(id){
+    for(var i =0; i<currentFlashCards.length; i++){
+      if(currentFlashCards[i]._id == id){
+        return currentFlashCards[i];
+      }
+    }
+  }
+
+  function deleteCard(id){
+    $http.delete('/cards/' + id)
+    .then(function(response){
+      $state.go('scoreBoard.flashCards');
+    }).catch(function(err){
+      console.log(err);
+    });
+  }
+
   return {
     getFlashCards: getFlashCards,
     createCard: createFlashCard,
     updateCard: updateFlashCard,
-    categories: categories
+    categories: categories,
+    getById: getById,
+    deleteCard: deleteCard
   };
 });

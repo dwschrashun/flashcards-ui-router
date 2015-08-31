@@ -17,5 +17,13 @@ app.config(function ($stateProvider) {
 		url: "/flashCards",
 		templateUrl: "../templates/flashCards.html",
 		controller: "MainController"
+	}).state("scoreBoard.editCard",{
+		url:"/:id",
+		templateUrl:"../templates/editCard.html",
+		controller: "EditCardController"
+	}).state('scoreBoard.delete',{
+		url:"/:id/delete",
+		templateUrl: "../templates/delete.html",
+		controller: "EditCardController"
 	});
 });

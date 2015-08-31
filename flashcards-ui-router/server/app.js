@@ -80,3 +80,12 @@ app.put('/cards/:id', function (req, res, next) {
     .then(null, next);
 });
 
+app.delete('/cards/:id', function(req, res, next){
+    FlashCardModel.findById(req.params.id).remove().exec()
+    .then(function(){
+        res.json('done');
+    })
+    .then(null, next);
+
+});
+
